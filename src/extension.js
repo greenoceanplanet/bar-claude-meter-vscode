@@ -49,7 +49,7 @@ function activate(context) {
       items.get('context')?.hide()
       return
     }
-    const window = contextWindowFor(ctx.tokens, ctx.model, config().get('contextWindow', 0))
+    const window = contextWindowFor(ctx.tokens, ctx.model)
     const percent = Math.round((ctx.tokens / window) * 100)
     const item = itemFor('context', 10)
     item.text = contextText(ctx.tokens, window)

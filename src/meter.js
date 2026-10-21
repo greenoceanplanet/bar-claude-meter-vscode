@@ -107,9 +107,9 @@ function modelWindow(model = '') {
   return 200_000
 }
 
-/** Context window to measure against: the configured one (0 = by model), or 1M once usage passes it. */
-function contextWindowFor(tokens, model, configured = 0) {
-  const window = configured > 0 ? configured : modelWindow(model)
+/** Context window to measure against: the model's, or 1M once usage passes it. */
+function contextWindowFor(tokens, model) {
+  const window = modelWindow(model)
   return tokens > window ? Math.max(window, 1_000_000) : window
 }
 

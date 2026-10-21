@@ -24,14 +24,12 @@ test('meterText draws stacked bar', () => {
 
 test('contextText', () => {
   assert.equal(contextText(196_000, 200_000), 'C98%')
-  assert.equal(contextWindowFor(250_000, undefined, 200_000), 1_000_000)
-  assert.equal(contextWindowFor(150_000, undefined, 200_000), 200_000)
+  assert.equal(contextWindowFor(250_000, 'claude-haiku-5-5'), 1_000_000)
+  assert.equal(contextWindowFor(150_000, undefined), 200_000)
   assert.equal(contextWindowFor(51_000, 'claude-opus-5-5'), 1_000_000)
   assert.equal(contextWindowFor(51_000, 'claude-sonnet-4-6'), 1_000_000)
   assert.equal(contextWindowFor(51_000, 'claude-opus-4-5'), 200_000)
-  assert.equal(contextWindowFor(51_000, 'claude-haiku-5-5'), 200_000)
-  assert.equal(contextWindowFor(51_000, 'claude-opus-5-5', 300_000), 300_000)
-})
+  assert.equal(contextWindowFor(51_000, 'claude-haiku-5-5'), 200_000)})
 
 test('lastContext takes the last main-loop assistant usage', () => {
   const line = (o) => JSON.stringify(o)

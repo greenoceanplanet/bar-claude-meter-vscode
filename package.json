@@ -2,11 +2,13 @@
   "name": "bar-claude-meter-vscode",
   "displayName": "Claude Usage Bar Meter",
   "description": "Claude 5-hour / weekly usage limits as bars in the VS Code status bar",
-  "version": "0.1.0",
+  "version": "0.1.1",
   "publisher": "greenoceanplanet",
   "license": "MIT",
   "icon": "assets/icon.png",
   "repository": { "type": "git", "url": "https://github.com/greenoceanplanet/bar-claude-meter-vscode" },
+  "homepage": "https://github.com/greenoceanplanet/bar-claude-meter-vscode#readme",
+  "bugs": { "url": "https://github.com/greenoceanplanet/bar-claude-meter-vscode/issues" },
   "engines": { "vscode": "^1.90.0" },
   "categories": ["Other"],
   "activationEvents": ["onStartupFinished"],
@@ -29,11 +31,6 @@
           "type": "boolean",
           "default": true,
           "description": "Show the context window used by the latest Claude Code session (read from its local transcript)."
-        },
-        "barClaudeMeter.contextWindow": {
-          "type": "number",
-          "default": 0,
-          "description": "Context window size in tokens; 0 picks it from the model (1M for Opus/Sonnet 4.6+ and 5+, Fable, [1m]; else 200K). Switches to 1,000,000 automatically once usage passes it."
         },
         "barClaudeMeter.showNumbers": {
           "type": "boolean",

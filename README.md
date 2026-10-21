@@ -1,6 +1,6 @@
 # Claude Usage Bar Meter (VS Code)
 
-![Status bar](assets/screenshot.png)
+![Status bar](https://raw.githubusercontent.com/greenoceanplanet/bar-claude-meter-vscode/master/assets/screenshot.png)
 
 Claude 5-hour / weekly usage limits as stacked bars on the right of the VS Code status bar.
 VS Code counterpart of [bar-claude-meter](https://github.com/greenoceanplanet/bar-claude-meter).
@@ -30,20 +30,10 @@ VS Code counterpart of [bar-claude-meter](https://github.com/greenoceanplanet/ba
 | `barClaudeMeter.barWidth` | 8 | Cells per bar |
 | `barClaudeMeter.showNumbers` | false | Show % left and time left next to bars |
 | `barClaudeMeter.showContext` | true | Show `C%` |
-| `barClaudeMeter.contextWindow` | 0 | Context window size; 0 picks it from the model; switches to 1M once usage passes it |
 
 ## Install
 
-No build step: plain JavaScript, no dependencies.
-
-```sh
-git clone https://github.com/greenoceanplanet/bar-claude-meter-vscode
-cd bar-claude-meter-vscode
-pnpm package          # → bar-claude-meter-vscode-0.1.0.vsix
-code --install-extension bar-claude-meter-vscode-0.1.0.vsix
-```
-
-Tests: `pnpm test` (Node's built-in runner).
+From the [Marketplace](https://marketplace.visualstudio.com/items?itemName=greenoceanplanet.bar-claude-meter-vscode), or search "Claude Usage Bar Meter" in the Extensions view.
 
 ## License
 
