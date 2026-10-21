@@ -2,7 +2,7 @@
   "name": "bar-claude-meter-vscode",
   "displayName": "Claude Usage Bar Meter",
   "description": "Claude 5-hour / weekly usage limits as bars in the VS Code status bar",
-  "version": "0.1.1",
+  "version": "0.1.2",
   "publisher": "greenoceanplanet",
   "license": "MIT",
   "icon": "assets/icon.png",
