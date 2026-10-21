@@ -1,7 +1,6 @@
-node_modules/**
-test/**
-pnpm-lock.yaml
-*.vsix
-.git/**
-.gitignore
-.vscodeignore
+**
+!src/*.js
+!package.json
+!README.md
+!LICENSE
+!assets/icon.png
