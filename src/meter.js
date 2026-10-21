@@ -99,9 +99,18 @@ function formatTokens(n) {
   return String(n)
 }
 
-/** Context window to measure against: the configured one, or 1M once usage passes it. */
-function contextWindowFor(tokens, configured) {
-  return tokens > configured ? Math.max(configured, 1_000_000) : configured
+/** Model's window: 1M for a "[1m]" model, Fable and Opus/Sonnet 4.6+ or 5+; 200K otherwise. */
+function modelWindow(model = '') {
+  const m = model.toLowerCase()
+  if (/\[1m\]|fable/.test(m)) return 1_000_000
+  if (/(?:opus|sonnet)-4-(?:[6-9]|\d\d)\b/.test(m) || /(?:opus|sonnet)-(?:[5-9]|\d\d)(?:-|\b)/.test(m)) return 1_000_000
+  return 200_000
+}
+
+/** Context window to measure against: the configured one (0 = by model), or 1M once usage passes it. */
+function contextWindowFor(tokens, model, configured = 0) {
+  const window = configured > 0 ? configured : modelWindow(model)
+  return tokens > window ? Math.max(window, 1_000_000) : window
 }
 
 /** "C38%": context used. */

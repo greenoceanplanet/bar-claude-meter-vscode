@@ -40,6 +40,7 @@ function activate(context) {
   let lastMtime
   let lastChangeAt = 0
   let working = false
+  const openedAt = Date.now()
 
   const config = () => vscode.workspace.getConfiguration('barClaudeMeter')
 
@@ -48,7 +49,7 @@ function activate(context) {
       items.get('context')?.hide()
       return
     }
-    const window = contextWindowFor(ctx.tokens, config().get('contextWindow', 200_000))
+    const window = contextWindowFor(ctx.tokens, ctx.model, config().get('contextWindow', 0))
     const percent = Math.round((ctx.tokens / window) * 100)
     const item = itemFor('context', 10)
     item.text = contextText(ctx.tokens, window)
@@ -70,12 +71,16 @@ function activate(context) {
       const first = lastMtime === undefined
       lastMtime = t.mtime
       lastChangeAt = now
-      const next = await readContext(t.file)
+      // A transcript already there when the window opened belongs to an earlier session.
+      if (first) return
+      let next = await readContext(t.file)
+      // Resuming a session rewrites its transcript without a new request; only replies since opening count.
+      if (next && next.at.getTime() < openedAt) next = undefined
       if (next?.tokens !== ctx?.tokens || next?.at.getTime() !== ctx?.at.getTime()) {
         ctx = next
         render()
       }
-      if (!first && !working) {
+      if (!working) {
         working = true
         void refresh()
       }
@@ -88,7 +93,7 @@ function activate(context) {
   function itemFor(kind, index) {
     let item = items.get(kind)
     if (!item) {
-      // Right side: higher priority sits further left, so 5h comes before 7d.
+      // Right side: higher priority sits further left, so usage comes before context.
       item = vscode.window.createStatusBarItem(`barClaudeMeter.${kind}`, vscode.StatusBarAlignment.Right, 1000 - index)
       item.name = `Claude ${kind}`
       item.command = 'barClaudeMeter.refresh'
@@ -119,33 +124,30 @@ function activate(context) {
     const width = config().get('barWidth', 8)
     const showNumbers = config().get('showNumbers', false)
     const list = meters(limits, new Date(), width)
-    const shown = new Set(list.map((m) => m.kind))
-    for (const [kind, item] of items) if (!shown.has(kind) && kind !== 'context') item.hide()
     renderContext()
 
+    // One item for every limit (5h, 7d, …), sharing one tooltip; the worst limit sets the colors.
+    const item = itemFor('usage', 0)
     if (list.length === 0) {
-      const item = itemFor('status', 0)
       item.text = '$(pulse) Claude'
+      item.color = undefined
+      item.backgroundColor = undefined
       item.tooltip = lastError ? `Bar Claude Meter: ${lastError}` : 'Bar Claude Meter: 불러오는 중…'
       item.show()
       return
     }
-    items.get('status')?.hide()
 
-    const tip = tooltip(list)
-    list.forEach((m, i) => {
-      const item = itemFor(m.kind, i)
-      item.text = (lastError ? '$(warning) ' : '') + meterText(m, showNumbers)
-      item.color = m.percentUsed >= WARN_AT ? undefined : QUOTA_COLOR
-      item.backgroundColor =
-        m.percentUsed >= ERROR_AT
-          ? new vscode.ThemeColor('statusBarItem.errorBackground')
-          : m.percentUsed >= WARN_AT
-            ? new vscode.ThemeColor('statusBarItem.warningBackground')
-            : undefined
-      item.tooltip = tip
-      item.show()
-    })
+    const worst = Math.max(...list.map((m) => m.percentUsed))
+    item.text = (lastError ? '$(warning) ' : '') + list.map((m) => meterText(m, showNumbers)).join(' ')
+    item.color = worst >= WARN_AT ? undefined : QUOTA_COLOR
+    item.backgroundColor =
+      worst >= ERROR_AT
+        ? new vscode.ThemeColor('statusBarItem.errorBackground')
+        : worst >= WARN_AT
+          ? new vscode.ThemeColor('statusBarItem.warningBackground')
+          : undefined
+    item.tooltip = tooltip(list)
+    item.show()
   }
 
   const cacheFile = path.join(context.globalStorageUri.fsPath, 'usage.json')

@@ -31,8 +31,8 @@
         },
         "barClaudeMeter.contextWindow": {
           "type": "number",
-          "default": 200000,
-          "description": "Context window size in tokens. Switches to 1,000,000 automatically once usage passes it."
+          "default": 0,
+          "description": "Context window size in tokens; 0 picks it from the model (1M for Opus/Sonnet 4.6+ and 5+, Fable, [1m]; else 200K). Switches to 1,000,000 automatically once usage passes it."
         },
         "barClaudeMeter.showNumbers": {
           "type": "boolean",

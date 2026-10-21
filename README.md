@@ -28,7 +28,7 @@ VS Code counterpart of [bar-claude-meter](https://github.com/greenoceanplanet/ba
 | `barClaudeMeter.barWidth` | 8 | Cells per bar |
 | `barClaudeMeter.showNumbers` | false | Show % left and time left next to bars |
 | `barClaudeMeter.showContext` | true | Show `C%` |
-| `barClaudeMeter.contextWindow` | 200000 | Context window size; switches to 1M once usage passes it |
+| `barClaudeMeter.contextWindow` | 0 | Context window size; 0 picks it from the model; switches to 1M once usage passes it |
 
 ## Install
 
