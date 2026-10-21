@@ -1,10 +1,11 @@
 {
   "name": "bar-claude-meter-vscode",
-  "displayName": "Bar Claude Meter",
+  "displayName": "Claude Usage Bar Meter",
   "description": "Claude 5-hour / weekly usage limits as bars in the VS Code status bar",
   "version": "0.1.0",
   "publisher": "greenoceanplanet",
   "license": "MIT",
+  "icon": "assets/icon.png",
   "repository": { "type": "git", "url": "https://github.com/greenoceanplanet/bar-claude-meter-vscode" },
   "engines": { "vscode": "^1.90.0" },
   "categories": ["Other"],
@@ -12,10 +13,10 @@
   "main": "./src/extension.js",
   "contributes": {
     "commands": [
-      { "command": "barClaudeMeter.refresh", "title": "Bar Claude Meter: Refresh" }
+      { "command": "barClaudeMeter.refresh", "title": "Claude Usage Bar Meter: Refresh" }
     ],
     "configuration": {
-      "title": "Bar Claude Meter",
+      "title": "Claude Usage Bar Meter",
       "properties": {
         "barClaudeMeter.barWidth": {
           "type": "number",

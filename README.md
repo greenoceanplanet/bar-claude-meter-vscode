@@ -1,4 +1,4 @@
-# Bar Claude Meter (VS Code)
+# Claude Usage Bar Meter (VS Code)
 
 Claude 5-hour / weekly usage limits as stacked bars on the right of the VS Code status bar.
 VS Code counterpart of [bar-claude-meter](https://github.com/greenoceanplanet/bar-claude-meter).

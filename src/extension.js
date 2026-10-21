@@ -132,7 +132,7 @@ function activate(context) {
       item.text = '$(pulse) Claude'
       item.color = undefined
       item.backgroundColor = undefined
-      item.tooltip = lastError ? `Bar Claude Meter: ${lastError}` : 'Bar Claude Meter: 불러오는 중…'
+      item.tooltip = lastError ? `Claude Usage Bar Meter: ${lastError}` : 'Claude Usage Bar Meter: 불러오는 중…'
       item.show()
       return
     }
