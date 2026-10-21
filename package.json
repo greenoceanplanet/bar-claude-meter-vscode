@@ -1,0 +1,49 @@
+{
+  "name": "bar-claude-meter-vscode",
+  "displayName": "Bar Claude Meter",
+  "description": "Claude 5-hour / weekly usage limits as bars in the VS Code status bar",
+  "version": "0.1.0",
+  "publisher": "greenoceanplanet",
+  "license": "MIT",
+  "repository": { "type": "git", "url": "https://github.com/greenoceanplanet/bar-claude-meter-vscode" },
+  "engines": { "vscode": "^1.90.0" },
+  "categories": ["Other"],
+  "activationEvents": ["onStartupFinished"],
+  "main": "./src/extension.js",
+  "contributes": {
+    "commands": [
+      { "command": "barClaudeMeter.refresh", "title": "Bar Claude Meter: Refresh" }
+    ],
+    "configuration": {
+      "title": "Bar Claude Meter",
+      "properties": {
+        "barClaudeMeter.barWidth": {
+          "type": "number",
+          "default": 8,
+          "minimum": 4,
+          "maximum": 16,
+          "description": "Cells per bar."
+        },
+        "barClaudeMeter.showContext": {
+          "type": "boolean",
+          "default": true,
+          "description": "Show the context window used by the latest Claude Code session (read from its local transcript)."
+        },
+        "barClaudeMeter.contextWindow": {
+          "type": "number",
+          "default": 200000,
+          "description": "Context window size in tokens. Switches to 1,000,000 automatically once usage passes it."
+        },
+        "barClaudeMeter.showNumbers": {
+          "type": "boolean",
+          "default": false,
+          "description": "Show % left and time left next to each bar."
+        }
+      }
+    }
+  },
+  "scripts": {
+    "test": "node --test",
+    "package": "pnpm dlx @vscode/vsce package --no-dependencies"
+  }
+}
